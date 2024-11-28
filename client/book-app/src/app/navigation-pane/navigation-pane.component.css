@@ -1,0 +1,39 @@
+.navigation-pane-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+    box-sizing: border-box;
+    gap: 20px;
+    padding: 50px;
+    border-left: 1px solid #E7DED0;
+}
+
+.nav-item{
+    color: #E7DED0;
+    font-size: 2em;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-item:hover {
+    transform: scale(1.05);
+}
+
+.logo {
+    background-image: url('../../../public/book.png');
+    height: 150px;
+    width: 150px;
+    align-self: center;
+    background-position: center;
+    background-size: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
