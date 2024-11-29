@@ -1,13 +1,21 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { MainPaneComponent } from './main-pane/main-pane.component';
+import { PublicLibraryComponent } from './public-library/public-library.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 
-    //   Start - User routing
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent }
+  {
+    path: '',
+    component: HomeComponent,
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' }, 
+      { path: 'home', component: MainPaneComponent }, 
+      { path: 'public-library', component: PublicLibraryComponent },
+    ],
+  },
 ];

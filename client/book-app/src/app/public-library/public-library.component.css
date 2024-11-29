@@ -1,0 +1,53 @@
+.upper {
+    padding: 30px;
+    border-bottom: 1px solid #E7DED0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.public-library-heading {
+    font-size: 3em;
+    color: #E7DED0;
+    font-weight: 800;
+}
+
+.search-form {
+    display: flex;
+    gap: 50px;
+}
+
+.search-input {
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    border: 1px solid #E7DED0;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: border-color 0.3s ease;
+    color: white;
+    font-weight: 600;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
+
+.submit-button {
+    padding: 10px 30px;
+    align-self: center;
+    font-size: 1.1em;
+    font-weight: 800;
+    color: #E7DED0;
+    background-color: #9F825B;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #D0BCA0;
+}
