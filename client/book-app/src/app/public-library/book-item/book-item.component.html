@@ -1,0 +1,26 @@
+<div class="book-card">
+    <img [src]="book.volumeInfo.imageLinks?.thumbnail || placeholderImage" [alt]="book.volumeInfo.title"
+        class="book-image">
+    <div class="book-info">
+        <h3 class="book-title">{{ book.volumeInfo.title }}</h3>
+        <p *ngIf="book.volumeInfo.authors" class="book-authors">
+            By {{ book.volumeInfo.authors.join(', ') }}
+        </p>
+        <p *ngIf="book.volumeInfo.description" class="book-description">
+            {{ book.volumeInfo.description }}
+        </p>
+        <div class="book-details">
+            <span *ngIf="book.volumeInfo.publishedDate" class="book-date">
+                {{ book.volumeInfo.publishedDate | slice:0:4 }}
+            </span>
+            <span *ngIf="book.volumeInfo.pageCount" class="book-pages">
+                {{ book.volumeInfo.pageCount }} pages
+            </span>
+        </div>
+        <div *ngIf="book.volumeInfo.categories" class="book-categories">
+            <span *ngFor="let category of book.volumeInfo.categories" class="category-tag">
+                {{ category }}
+            </span>
+        </div>
+    </div>
+</div>

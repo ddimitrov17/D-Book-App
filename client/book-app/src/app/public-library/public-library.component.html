@@ -1,13 +1,15 @@
 <div class="public-library-container">
-    <div class="upper">
-      <h2 class="public-library-heading">Explore the public library</h2>
-      <form #BookSearchForm="ngForm" (ngSubmit)="searchSubmitHandler()" class="search-form">
-        <input type="search" id="search" class="search-input" name="searchTerm" required ngModel>
-        <button type="submit" class="submit-button">Search</button>
-      </form>
-    </div>
-    <div class="lower">
-      <p>lower part</p>
-    </div>
+  <div class="upper">
+    <h2 class="public-library-heading">Explore the public library</h2>
+    <form #BookSearchForm="ngForm" (ngSubmit)="searchSubmitHandler()" class="search-form">
+      <input type="search" id="search" class="search-input" name="searchTerm" required ngModel>
+      <button type="submit" class="submit-button">Search</button>
+    </form>
   </div>
-  
+  <div *ngIf="books.length > 0" class="books-grid">
+    <app-book-item 
+      *ngFor="let book of books"
+      [book]="book">
+    </app-book-item>
+  </div>
+</div>

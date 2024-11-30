@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { BookItemComponent } from './book-item/book-item.component';
 
 interface BookVolume {
   id: string;
@@ -12,19 +14,18 @@ interface BookVolume {
       thumbnail?: string;
     };
     publishedDate?: string;
-    publisher?: string;
+    pageCount?: number;
+    categories?: string[];
   };
-} //TODO EDIT 
+} 
 
 interface GoogleBooksResponse {
-  kind: string;
-  totalItems: number;
   items: BookVolume[];
 }
 
 @Component({
   selector: 'app-public-library',
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule,BookItemComponent],
   templateUrl: './public-library.component.html',
   styleUrl: './public-library.component.css'
 })
@@ -37,7 +38,7 @@ export class PublicLibraryComponent {
   searchSubmitHandler() {
     const form = this.form!;
     if (form.invalid) {
-      console.log('This form is invalid!');
+      console.log('This form is invalid!'); //TODO: Add Error Handling
       return;
     }
 
@@ -48,8 +49,9 @@ export class PublicLibraryComponent {
       .subscribe({
         next: (response) => {
           this.books = response.items || [];  
-          console.log(this.books)
+          console.log(this.books) //TODO: Remove
         },
+
         error: (err) => {
           console.error('Error fetching books:', err);
           this.books = [];

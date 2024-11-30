@@ -16,6 +16,8 @@
     font-weight: 700;
     cursor: pointer;
     text-decoration: none;
+    display: flex;
+    gap: 10px;
 }
 
 .nav-item:hover {
