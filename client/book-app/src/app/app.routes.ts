@@ -13,9 +13,14 @@ export const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' }, 
-      { path: 'home', component: MainPaneComponent }, 
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: MainPaneComponent },
       { path: 'public-library', component: PublicLibraryComponent },
+      {
+        path: 'book-details/:id',
+        loadComponent: () => import('./public-library/book-details/book-details.component')
+          .then(m => m.BookDetailsComponent)
+      }
     ],
   },
 ];

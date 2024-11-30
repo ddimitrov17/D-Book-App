@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 interface VolumeInfo {
   title: string;
@@ -14,6 +15,7 @@ interface VolumeInfo {
 }
 
 interface Book {
+  id: string;
   volumeInfo: VolumeInfo;
 }
 
@@ -22,10 +24,10 @@ interface Book {
   templateUrl: './book-item.component.html',
   styleUrls: ['./book-item.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, RouterLink]
 })
 export class BookItemComponent {
   @Input() book!: Book;
-  
+
   placeholderImage = '';
 }
