@@ -16,6 +16,14 @@ export class BookDetailsComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
+  isModalOpen = false; 
+  openModal() {
+    this.isModalOpen = true; 
+  }
+  closeModal() {
+    this.isModalOpen = false; 
+  }
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient

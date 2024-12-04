@@ -34,10 +34,12 @@
     display: flex;
     flex-direction: column;
     width: 60px;
-    margin-top:30px;
+    margin-top: 30px;
 }
 
-.add-to-reading-list,.favorites,.review {
+.add-to-reading-list,
+.favorites,
+.review {
     background: transparent;
     color: #E7DED0;
     border: none;
@@ -54,7 +56,9 @@
     /* border: 1px solid #E7DED0; */
 }
 
-.add-to-reading-list:hover,.favorites:hover,.review:hover {
+.add-to-reading-list:hover,
+.favorites:hover,
+.review:hover {
     background-color: #9F825B;
 }
 
@@ -138,4 +142,91 @@
 
 .additional-info p {
     color: #9F825B;
+}
+
+/* MODAL */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+
+.modal {
+    background-color: #9F825B;
+    padding: 40px;
+    border-radius: 8px;
+    width: 40%;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.22em;
+    color: #E7DED0;
+}
+
+.modal-heading {
+    color: #E7DED0
+}
+
+.review_textarea {
+    background-color: transparent;
+    border: 1px solid #E7DED0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+    width: 100%;
+    height: 10em;
+    box-sizing: border-box;
+    color: #E7DED0;
+    font-family: inherit;
+    font-size: 1em;
+    resize: none;
+    overflow: auto; 
+    padding-bottom: 40px;
+}
+
+.review_textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.review_textarea::placeholder {
+    color: #E7DED0;
+    opacity: 0.7;
+}
+
+.review_textarea:focus {
+    outline: none;
+    border-color: #E7DED0;
+}
+
+.modal-form {
+    position:relative;
+}
+
+.post-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #82614A;
+    border: none;
+    cursor: pointer;
+    font-size: 1.22em;
+    color: #E7DED0;
+    border-radius: 5px;
 }
