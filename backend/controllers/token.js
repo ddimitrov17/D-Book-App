@@ -10,7 +10,9 @@ function generateToken(userId, username,res) {
     });
 
     res.cookie("jwt", token, {
-        httpOnly: true
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None'
     });
 };
 

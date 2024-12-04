@@ -59,9 +59,36 @@ async function login(req, res) {
     }
 }
 
+async function validate(req, res) {
+    try {
+        const userQuery = `
+        SELECT id, username, full_name, email
+        FROM users
+        WHERE id = $1
+`;
+
+        const userResult = await db.query(userQuery, [req.user.id]);
+
+        if (userResult.rows.length === 0) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const user = userResult.rows[0];
+
+        res.status(200).json(user);
+    } catch (error) {
+        console.log("Error in getting the currently logged in user", error.message);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
+
 async function logout(req, res) {
     try {
-        res.clearCookie('jwt');
+        res.clearCookie('jwt', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None'
+        });
         res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
@@ -71,5 +98,6 @@ async function logout(req, res) {
 module.exports = {
     signup,
     login,
-    logout
+    logout,
+    validate
 }
