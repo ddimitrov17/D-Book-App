@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const { authRouter } = require("./routes/auth.routes");
+const { reviewRouter } = require("./routes/review.routes");
 dotenv.config();
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use('/api/auth', authRouter);
+app.use('/api/reviews', reviewRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}...`);

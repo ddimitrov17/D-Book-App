@@ -86,11 +86,11 @@
     <div class="modal">
         <button type="button" (click)="closeModal()" class="close-button">←</button>
         <h2 class="modal-heading">Write a review on "{{book.volumeInfo?.title}}"</h2>
-        <form class="modal-form">
+        <form #CreateReviewForm="ngForm" (ngSubmit)="createReviewSubmitHandler()" class="modal-form">
             <div class="form-group">
                 <textarea 
                     id="review_text" 
-                    name="review_text"
+                    name="review_content"
                     placeholder="Write your review..."
                     class="review_textarea"
                     required 
