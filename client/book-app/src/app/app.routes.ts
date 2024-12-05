@@ -4,6 +4,8 @@ import { MainPaneComponent } from './main-pane/main-pane.component';
 import { PublicLibraryComponent } from './public-library/public-library.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { ReadingListComponent } from './reading-list/reading-list.component';
+import { FavoritesShelfComponent } from './favorites-shelf/favorites-shelf.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,7 +22,9 @@ export const routes: Routes = [
         path: 'book-details/:id',
         loadComponent: () => import('./public-library/book-details/book-details.component')
           .then(m => m.BookDetailsComponent)
-      }
+      },
+      { path: 'reading-list', component: ReadingListComponent },
+      { path: 'favorites-shelf', component: FavoritesShelfComponent },
     ],
   },
 ];

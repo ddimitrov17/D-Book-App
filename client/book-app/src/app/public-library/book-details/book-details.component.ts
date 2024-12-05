@@ -59,6 +59,10 @@ export class BookDetailsComponent implements OnInit {
       });
   }
 
+  addToReadingListHandler() {
+    
+  }
+
   ngOnInit() {
     this.route.params.pipe(
       switchMap(params => {
