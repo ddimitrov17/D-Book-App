@@ -17,6 +17,23 @@ async function createReview(req, res) {
     }
 }
 
+async function getReadingListAndFavorites(req, res) {
+    const creator_id = req.user.id;
+    try {
+        const readingListAndFavoritesQuery = `
+        SELECT reading_list, favorites
+        FROM users
+        WHERE id = $1
+        `;
+
+        const readingListAndFavoritesResult = await db.query(readingListAndFavoritesQuery, [creator_id]);
+        res.status(200).json(readingListAndFavoritesResult.rows);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
-    createReview
+    createReview,
+    getReadingListAndFavorites
 }
