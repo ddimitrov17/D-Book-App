@@ -58,8 +58,22 @@ async function getReviewsInFeed(req, res) {
     }
 }
 
+async function getReviewsOfUser(req,res) {
+    try {
+        const reviewsOfUser = await db.query(
+            'SELECT * FROM reviews WHERE creator_id = $1',
+            [req.user.id]
+        );
+
+        res.status(201).json(reviewsOfUser.rows);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
     createReview,
     getReadingListAndFavorites,
-    getReviewsInFeed
+    getReviewsInFeed,
+    getReviewsOfUser
 }
