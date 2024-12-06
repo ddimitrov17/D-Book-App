@@ -21,3 +21,25 @@
         </div>
     </div>
 </div>
+<div class="feed-container">
+    <div *ngFor="let review of reviews" class="review-card">
+        <div class="review-author">
+            <p class="author-paragraph">You wrote:</p>
+        </div>
+        <div class="review">
+            <p class="review-text">{{ review.review_content }}</p>
+        </div>
+        <div class="book-info">
+            <img [src]="review.book_photo" alt="{{ review.book_title }}" class="book-photo">
+            <div class="review-content">
+                <h3 class="book-title">{{ review.book_title }}</h3>
+                <p class="book-author">By {{ review.book_author }}</p>
+                <div class="review-actions">
+                    <button class="details-button">
+                        Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
