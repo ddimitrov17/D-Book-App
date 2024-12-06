@@ -1,0 +1,37 @@
+.profile-details {
+    display: flex;
+    padding: 50px;
+    gap: 100px;
+    border-bottom: 1px solid #E7DED0
+}
+
+.photo {
+    width:200px;
+    height:200px;
+    border-radius: 50%;
+}
+
+.fullname {
+    font-size: 3em;
+    color: #E7DED0;
+}
+
+.username {
+    font-size: 1.6em;
+    color: #DAC09B;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 50px;
+    align-items: center;  
+}
+
+.stat-item > * {
+    color: #E7DED0;
+    font-size:1.4em;
+}
+
+.stat-number {
+    text-align:center;
+}
