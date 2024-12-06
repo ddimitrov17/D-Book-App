@@ -40,6 +40,18 @@ async function getReviewsInFeed(req, res) {
             [req.user.id]
         );
 
+        for (let i=0;i<reviewsForFeed.rows.length;i++) {
+            const creatorId = reviewsForFeed.rows[i].creator_id;
+            const creatorQuery = `
+            SELECT username
+            FROM users
+            WHERE id = $1
+            `;
+            const creatorResult = await db.query(creatorQuery, [creatorId]);
+            reviewsForFeed.rows[i].creator = {
+                username: creatorResult.rows[0].username,
+            }
+        }
         res.status(201).json(reviewsForFeed.rows);
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
