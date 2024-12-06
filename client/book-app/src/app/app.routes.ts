@@ -6,6 +6,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ReadingListComponent } from './reading-list/reading-list.component';
 import { FavoritesShelfComponent } from './favorites-shelf/favorites-shelf.component';
+import { FeedComponent } from './feed/feed.component';
+import { PersonalProfileComponent } from './personal-profile/personal-profile.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,6 +27,8 @@ export const routes: Routes = [
       },
       { path: 'reading-list', component: ReadingListComponent },
       { path: 'favorites-shelf', component: FavoritesShelfComponent },
+      { path: 'feed', component: FeedComponent },
+      { path: 'my-profile', component: PersonalProfileComponent }
     ],
   },
 ];
