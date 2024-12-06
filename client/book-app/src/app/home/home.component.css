@@ -6,7 +6,7 @@
 }
 
 .left-pane {
-    flex: 0 0 80%;  
+    flex: 0 0 75%;  
     height: 100%;    
     overflow: auto;
 }
@@ -17,6 +17,6 @@
 
 app-navigation-pane {
     box-sizing: border-box;
-    flex: 0 0 20%;   
+    flex: 0 0 25%;   
     height: 100%;  
 }
