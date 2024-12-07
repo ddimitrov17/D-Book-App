@@ -23,11 +23,32 @@ interface Review {
 })
 export class ReviewDetailsComponent implements OnInit {
   review: Review | null = null;
+  isEditModalOpen = false;
+  isDeleteModalOpen = false
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient
   ) {}
+
+  
+  openEditModal() {
+    this.isEditModalOpen = true;
+  }
+
+  closeEditModal() {
+    this.isEditModalOpen = false;
+  }
+
+
+  openDeleteModal() {
+    this.isDeleteModalOpen = true;
+  }
+
+  closeDeleteModal() {
+    this.isDeleteModalOpen = false;
+  }
+
 
   ngOnInit() {
     this.route.params.subscribe(params => {

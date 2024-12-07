@@ -8,14 +8,14 @@
                 </div>
             </div>
             <div class="review-actions">
-                <button class="edit-button">
+                <button class="edit-button" (click)="openEditModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#E7DED0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
                         <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
                     </svg>
                 </button>
-                <button class="delete-button">
+                <button class="delete-button" (click)="openDeleteModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#E7DED0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 6h18"></path>
@@ -31,6 +31,31 @@
                 <h1>{{ review.book_title }}</h1>
                 <p class="author">By {{ review.book_author }}</p>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="isEditModalOpen">
+    <div class="modal">
+        <button type="button" (click)="closeEditModal()" class="close-button">←</button>
+        <h2 class="modal-heading">Edit your review on </h2>
+        <form class="modal-form">
+            <div class="form-group">
+                <textarea id="review_text" name="review_content" placeholder="Write your review..."
+                    class="review_textarea"
+                    value={{review?.review_content}} required ngModel></textarea>
+            </div>
+            <button type="submit" class="post-button">Edit</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="isDeleteModalOpen">
+    <div class="modal">
+        <h2 class="modal-heading-delete">Are you sure you want to delete your review?</h2>
+        <div class="buttons">
+        <button class="cancel-button">Cancel</button>
+        <button class="confirm-button">Confirm</button>
         </div>
     </div>
 </div>
