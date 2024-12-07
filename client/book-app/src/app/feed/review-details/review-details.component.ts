@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute,RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 interface Review {
@@ -17,7 +17,7 @@ interface Review {
 
 @Component({
   selector: 'app-review-details',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule],
   templateUrl: './review-details.component.html',
   styleUrls: ['./review-details.component.css']
 })

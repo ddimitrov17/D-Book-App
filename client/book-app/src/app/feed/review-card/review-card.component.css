@@ -6,20 +6,31 @@
     background-color: #9F825B;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    width: 100%; 
+    width: 100%;
     box-sizing: border-box;
 }
+
 .review {
     border-bottom: 1px solid #E7DED0;
 }
 
 .review-text {
-    padding-bottom: 20px;
+    font-size: 1em;
+    color: #E7DED0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3; 
+    line-height: 1.5; 
+    /* max-height: calc(1.5em * 3);  */
+    margin-bottom: 20px;
 }
+
 
 .book-info {
     display: flex;
-    gap: 20px;
+    gap: 40px;
 }
 
 .book-photo {
@@ -34,6 +45,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 
 .book-title {
@@ -52,12 +64,18 @@
 }
 
 .review-actions {
-    align-self: flex-end;
     display: flex;
     justify-content: space-around;
     width: 100%;
     gap: 10px;
     margin-top: auto;
+}
+
+.author-paragraph {
+    color: #DAC09B;
+    font-style: italic;
+    font-size: 1.4em;
+    font-weight: bolder;
 }
 
 .like-button,

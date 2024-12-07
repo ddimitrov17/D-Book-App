@@ -1,9 +1,8 @@
 <div class="review-details-container" *ngIf="review">
-    <button class="back-button" routerLink="/feed">← Back to Feed</button>
     <div class="review-content">
         <div class="review-header">
             <div class="left">
-                <h2>Review by {{ review.creator.username }}</h2>
+                <h2 class="reviewby-heading">Review by {{ review.creator.username }}</h2>
                 <div class="review-text">
                     <p>{{ review.review_content }}</p>
                 </div>
