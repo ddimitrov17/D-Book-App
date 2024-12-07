@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-
+import { ReviewCardComponent } from './review-card/review-card.component';
 
 interface Review {
   book_title: string;
@@ -18,7 +18,7 @@ interface Review {
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReviewCardComponent],
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.css']
 })
@@ -31,11 +31,10 @@ export class FeedComponent implements OnInit {
     this.http
       .get<Review[]>('http://localhost:5000/api/reviews/get-reviews-in-feed', { withCredentials: true })
       .subscribe({
-        next: (response: any[]) => {
+        next: (response) => {
           this.reviews = response;
-          console.log(this.reviews) //TODO: REMOVE
         },
-        error: (err: any) => {
+        error: (err) => {
           console.error('Error fetching reviews:', err);
         },
       });

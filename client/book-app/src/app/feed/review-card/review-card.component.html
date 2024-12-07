@@ -1,0 +1,31 @@
+<div class="review-card">
+    <div class="review-author">
+        <p class="author-paragraph"><span>{{ review.creator.username }}</span> wrote:</p>
+    </div>
+    <div class="review">
+        <p class="review-text">{{ review.review_content }}</p>
+    </div>
+    <div class="book-info">
+        <img [src]="review.book_photo" alt="{{ review.book_title }}" class="book-photo">
+        <div class="review-content">
+            <h3 class="book-title">{{ review.book_title }}</h3>
+            <p class="book-author">By {{ review.book_author }}</p>
+            <div class="review-actions">
+                <button class="like-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#E7DED0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                    </svg>
+                </button>
+                <button class="details-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#E7DED0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
