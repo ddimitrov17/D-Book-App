@@ -8,6 +8,7 @@ import { ReadingListComponent } from './reading-list/reading-list.component';
 import { FavoritesShelfComponent } from './favorites-shelf/favorites-shelf.component';
 import { FeedComponent } from './feed/feed.component';
 import { PersonalProfileComponent } from './personal-profile/personal-profile.component';
+import { ReviewDetailsComponent } from './feed/review-details/review-details.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -28,7 +29,8 @@ export const routes: Routes = [
       { path: 'reading-list', component: ReadingListComponent },
       { path: 'favorites-shelf', component: FavoritesShelfComponent },
       { path: 'feed', component: FeedComponent },
-      { path: 'my-profile', component: PersonalProfileComponent }
+      { path: 'my-profile', component: PersonalProfileComponent },
+      { path: 'review-details/:id', component: ReviewDetailsComponent },
     ],
   },
 ];

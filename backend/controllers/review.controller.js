@@ -71,9 +71,35 @@ async function getReviewsOfUser(req,res) {
     }
 }
 
+async function getReviewById(req,res) {
+    try {
+        const reviewId = req.params.id;
+        const reviewById = await db.query(
+            'SELECT * FROM reviews WHERE id = $1',
+            [reviewId]
+        );
+
+            const creatorId = reviewById.rows[0].creator_id;
+            const creatorQuery = `
+            SELECT username
+            FROM users
+            WHERE id = $1
+            `;
+            const creatorResult = await db.query(creatorQuery, [creatorId]);
+            reviewById.rows[0].creator = {
+                username: creatorResult.rows[0].username,
+            }
+
+        res.status(201).json(reviewById.rows[0]);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
     createReview,
     getReadingListAndFavorites,
     getReviewsInFeed,
-    getReviewsOfUser
+    getReviewsOfUser,
+    getReviewById
 }

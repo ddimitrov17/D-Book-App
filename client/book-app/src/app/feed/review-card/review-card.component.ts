@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Review {
   book_title: string;
@@ -22,4 +23,10 @@ interface Review {
 })
 export class ReviewCardComponent {
   @Input() review!: Review;
+
+  constructor(private router: Router) {}
+
+  showDetails() {
+    this.router.navigate(['/review-details', this.review.id]);
+  }
 }

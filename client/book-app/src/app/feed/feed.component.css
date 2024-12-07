@@ -2,13 +2,19 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
+    gap: 50px;
+    padding: 50px;
+    width: 100%;
+    box-sizing: border-box;
 }
-
 .author-paragraph {
     color: #DAC09B;
     font-style: italic;
     font-size: 1.4em;
     font-weight: bolder;
+}
+
+.card {
+    width: calc(50% - 25px);
+    box-sizing: border-box;
 }
