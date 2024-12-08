@@ -96,10 +96,38 @@ async function getReviewById(req,res) {
     }
 }
 
+async function updateReview(req, res) {
+    try {
+        const reviewId = req.params.id; 
+        const { review_content } = req.body; 
+
+        if (!review_content || review_content.trim() === "") {
+            return res.status(400).json({ error: "Review content cannot be empty" });
+        }
+
+        const result = await db.query(
+            'UPDATE reviews SET review_content = $1 WHERE id = $2 AND creator_id = $3 RETURNING *',
+            [review_content, reviewId, req.user.id] 
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: "Review not found or not authorized" });
+        }
+
+        res.status(200).json({
+            review: result.rows[0],
+        });
+    } catch (error) {
+        console.error("Error updating review:", error.message); 
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
     createReview,
     getReadingListAndFavorites,
     getReviewsInFeed,
     getReviewsOfUser,
-    getReviewById
+    getReviewById,
+    updateReview
 }
