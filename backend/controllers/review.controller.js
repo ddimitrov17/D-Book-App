@@ -123,11 +123,32 @@ async function updateReview(req, res) {
     }
 }
 
+async function deleteReview(req,res) {
+    try {
+        const reviewId = req.params.id;
+        const result = await db.query(
+            'DELETE FROM reviews WHERE id = $1 AND creator_id = $2',
+            [reviewId, req.user.id]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: "Review not found or not authorized" });
+        }
+
+        res.status(200).json({
+            message: "Review deleted successfully",
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
     createReview,
     getReadingListAndFavorites,
     getReviewsInFeed,
     getReviewsOfUser,
     getReviewById,
-    updateReview
+    updateReview,
+    deleteReview
 }
