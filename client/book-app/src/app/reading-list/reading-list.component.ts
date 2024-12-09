@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-reading-list',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './reading-list.component.html',
   styleUrl: './reading-list.component.css',
 })
