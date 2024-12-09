@@ -38,12 +38,12 @@
 <div class="modal-overlay" *ngIf="isEditModalOpen">
     <div class="modal">
         <button type="button" (click)="closeEditModal()" class="close-button">←</button>
-        <h2 class="modal-heading">Edit your review on </h2>
-        <form class="modal-form">
+        <h2 class="modal-heading">Edit your review</h2>
+        <form class="modal-form" (ngSubmit)="editReview()">
             <div class="form-group">
                 <textarea id="review_text" name="review_content" placeholder="Write your review..."
-                    class="review_textarea"
-                    value={{review?.review_content}} required ngModel></textarea>
+                    class="review_textarea" [(ngModel)]="editedReviewContent" required>
+          </textarea>
             </div>
             <button type="submit" class="post-button">Edit</button>
         </form>
@@ -54,8 +54,8 @@
     <div class="modal">
         <h2 class="modal-heading-delete">Are you sure you want to delete your review?</h2>
         <div class="buttons">
-        <button class="cancel-button">Cancel</button>
-        <button class="confirm-button">Confirm</button>
+            <button class="cancel-button" (click)="closeDeleteModal()">Cancel</button>
+            <button class="confirm-button">Confirm</button>
         </div>
     </div>
 </div>
