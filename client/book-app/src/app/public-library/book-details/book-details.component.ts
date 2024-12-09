@@ -110,16 +110,45 @@ export class BookDetailsComponent implements OnInit {
       })
     ).subscribe({
       next: (state: State) => {
-        console.log(state)
+        // console.log(state)
         this.isInTheReadingList = state.readingListState;
         this.isInTheFavorites = state.favoritesListState;
-        console.log(this.isInTheReadingList)
-        console.log(this.isInTheFavorites)
+        // console.log(this.isInTheReadingList)
+        // console.log(this.isInTheFavorites)
       },
       error: (err) => {
         console.error('Error:', err);
       }
     });
+  }
+
+
+  toggleReadingList() {
+    this.isInTheReadingList = !this.isInTheReadingList;
+    this.http.post('http://localhost:5000/api/reviews/interact-with-reading-list', { book_id: this.book?.id }, { withCredentials: true })
+      .subscribe({
+        next: (response) => {
+          // console.log('Reading list updated:', response);
+        },
+        error: (err) => {
+          console.error('Error updating reading list:', err);
+          this.isInTheReadingList = !this.isInTheReadingList;
+        }
+      });
+  }
+
+  toggleFavorites() {
+    this.isInTheFavorites = !this.isInTheFavorites;
+    this.http.post('http://localhost:5000/api/reviews/interact-with-favorites-shelf', { book_id: this.book?.id }, { withCredentials: true })
+      .subscribe({
+        next: (response) => {
+          // console.log('Favorites updated:', response);
+        },
+        error: (err) => {
+          console.error('Error updating favorites:', err);
+          this.isInTheFavorites = !this.isInTheFavorites;
+        }
+      });
   }
   
 }

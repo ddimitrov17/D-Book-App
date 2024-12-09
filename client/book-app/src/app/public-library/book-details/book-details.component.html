@@ -29,7 +29,7 @@
                 <div class="interactions-buttons">
                     <!-- Add to Reading List Button -->
                     <!-- Add to Reading List Button -->
-                    <button class="add-to-reading-list">
+                    <button class="add-to-reading-list" (click)="toggleReadingList()">
                         <svg *ngIf="!isInTheReadingList" width="28" height="28" viewBox="0 0 24 24" fill="none"
                             stroke="#e7ded0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
@@ -44,7 +44,7 @@
 
 
                     <!-- Favorites Button -->
-                    <button class="favorites" [ngClass]="{'filled': isInTheFavorites}">
+                    <button class="favorites" [ngClass]="{'filled': isInTheFavorites}" (click)="toggleFavorites()">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e7ded0" stroke-width="2.5"
                             stroke-linecap="round" stroke-linejoin="round">
                             <polygon
