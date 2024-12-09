@@ -1,1 +1,12 @@
-<p>favorites-shelf works!</p>
+<div class="favorites-shelf-container">
+    <div *ngIf="books.length === 0" class="empty-list">
+        <p>Your favorites shelf is empty.</p>
+    </div>
+    <div *ngFor="let row of bookRows" class="shelf">
+        <div class="book-container">
+            <div *ngFor="let book of row" class="book-card" [routerLink]="['/book-details', book.id]">
+                <img [src]="book.thumbnail" [alt]="book.title" class="book-thumbnail" />
+            </div>
+        </div>
+    </div>
+</div>

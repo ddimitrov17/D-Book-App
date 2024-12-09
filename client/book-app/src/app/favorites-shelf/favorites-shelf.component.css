@@ -1,0 +1,62 @@
+.favorites-shelf-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.shelf {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.shelf::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background-color: #9F825B;
+    border-radius: 10px;
+    z-index: 3;
+}
+
+.book-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.book-card {
+    width: 100px;
+    height: 150px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.book-card img {
+    max-width: 100px;
+    min-height: 150px;
+    max-height: 150px;
+    border-radius: 5px;
+}
+
+.book-card:hover {
+    transform: scale(1.1);
+}
+
+.empty-list {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #E7DED0;
+}
