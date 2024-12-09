@@ -69,7 +69,16 @@
 }
 
 .review-text {
-    padding-bottom: 20px;
+    font-size: 1em;
+    color: #E7DED0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1; 
+    line-height: 1.5; 
+    /* max-height: calc(1.5em * 3);  */
+    margin-bottom: 20px;
 }
 
 .book-info {
