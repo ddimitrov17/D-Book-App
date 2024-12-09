@@ -41,10 +41,10 @@ export class BookDetailsComponent implements OnInit {
       return;
     }
     const formData = form.value;
-
     formData.book_title = this.book.volumeInfo?.title;
     formData.book_photo = this.book.volumeInfo?.imageLinks?.thumbnail || this.placeholderImage;
     formData.book_author = this.book.volumeInfo?.authors?.join(', ') || 'Unknown Author';
+    formData.book_id = this.book.id;
     console.log(formData)
     this.http.post('http://localhost:5000/api/reviews/create-review', formData, { withCredentials: true })
       .subscribe({

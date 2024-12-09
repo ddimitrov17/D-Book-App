@@ -2,11 +2,11 @@ const { db } = require('../database/database');
 
 async function createReview(req, res) {
     try {
-        const { review_content, book_photo, book_title, book_author } = req.body;
+        const { review_content, book_photo, book_title, book_author, book_id } = req.body;
         const creator_id = req.user.id;
         const newReview = await db.query(
-            'INSERT INTO reviews (review_content, creator_id, book_photo, book_title, book_author ) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [review_content, creator_id, book_photo, book_title, book_author]
+            'INSERT INTO reviews (review_content, creator_id, book_photo, book_title, book_author, book_id ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+            [review_content, creator_id, book_photo, book_title, book_author, book_id]
         );
 
         res.status(201).json({
@@ -143,6 +143,80 @@ async function deleteReview(req,res) {
     }
 }
 
+async function addOrRemoveToReadingList(req,res) {
+    try {
+        const { book_id } = req.body;
+        const creator_id = req.user.id;
+        const user = await db.query(
+            'SELECT * FROM users WHERE id = $1',
+            [creator_id]
+        );
+
+        if (user.rows.length === 0) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const readingList = user.rows[0].reading_list;
+        const readingListArray = readingList ? readingList.split(",") : [];
+
+        if (readingListArray.includes(book_id)) {
+            readingListArray.splice(readingListArray.indexOf(book_id), 1);
+        } else {
+            readingListArray.push(book_id);
+        }
+
+        const updatedReadingList = readingListArray.join(",");
+        await db.query(
+            'UPDATE users SET reading_list = $1 WHERE id = $2',
+            [updatedReadingList, creator_id]
+        );
+
+        res.status(200).json({
+            message: "Reading list updated successfully",
+        });
+    } catch (err) {
+        console.error("Error updating reading list:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+async function addOrRemoveToFavoritesShelf(req,res) {
+    try {
+        const { book_id } = req.body;
+        const creator_id = req.user.id;
+        const user = await db.query(
+            'SELECT * FROM users WHERE id = $1',
+            [creator_id]
+        );
+
+        if (user.rows.length === 0) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const favoritesList = user.rows[0].favorites_shelf;
+        const favoritesListArray = favoritesList ? favoritesList.split(",") : [];
+
+        if (favoritesListArray.includes(book_id)) {
+            favoritesListArray.splice(favoritesListArray.indexOf(book_id), 1);
+        } else {
+            favoritesListArray.push(book_id);
+        }
+
+        const updatedFavoritesList = favoritesListArray.join(",");
+        await db.query(
+            'UPDATE users SET favorites_shelf = $1 WHERE id = $2',
+            [updatedFavoritesList, creator_id]
+        );
+
+        res.status(200).json({
+            message: "Favorites shelf updated successfully",
+        });
+    } catch (err) {
+        console.error("Error updating favorites shelf:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
     createReview,
     getReadingListAndFavorites,
@@ -150,5 +224,7 @@ module.exports = {
     getReviewsOfUser,
     getReviewById,
     updateReview,
-    deleteReview
+    deleteReview,
+    addOrRemoveToReadingList,
+    addOrRemoveToFavoritesShelf
 }
