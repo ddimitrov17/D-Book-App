@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface Review {
   book_title: string;
@@ -30,7 +31,8 @@ export class ReviewDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   openEditModal() {
@@ -78,6 +80,21 @@ export class ReviewDetailsComponent implements OnInit {
           },
           error: (err) => {
             console.error('Error updating review:', err);
+          }
+        });
+    }
+  }
+
+  deleteReview() {
+    if (this.review) {
+      this.http.delete(`http://localhost:5000/api/reviews/delete-review/${this.review.id}`, { withCredentials: true })
+        .subscribe({
+          next: () => {
+            this.isDeleteModalOpen = false;
+            this.router.navigate(['/home']);
+          },
+          error: (err) => {
+            console.error('Error deleting review:', err);
           }
         });
     }
