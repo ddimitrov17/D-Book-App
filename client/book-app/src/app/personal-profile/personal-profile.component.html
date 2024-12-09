@@ -35,7 +35,7 @@
                 <h3 class="book-title">{{ review.book_title }}</h3>
                 <p class="book-author">By {{ review.book_author }}</p>
                 <div class="review-actions">
-                    <button class="details-button">
+                    <button class="details-button" (click)="showDetails(review.id)">
                         Details
                     </button>
                 </div>

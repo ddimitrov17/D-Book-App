@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface User {
   username: string;
@@ -29,7 +30,7 @@ export class PersonalProfileComponent implements OnInit {
   user: User | null = null;
   reviews: Review[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router: Router) {}
 
   ngOnInit() {
     // Fetch user data
@@ -60,5 +61,9 @@ export class PersonalProfileComponent implements OnInit {
           },
         });
     }
+  }
+
+  showDetails(reviewId: string) {
+    this.router.navigate(['/review-details', reviewId]);
   }
 }
