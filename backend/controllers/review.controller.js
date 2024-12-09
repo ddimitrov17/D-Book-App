@@ -17,22 +17,6 @@ async function createReview(req, res) {
     }
 }
 
-async function getReadingListAndFavorites(req, res) {
-    const creator_id = req.user.id;
-    try {
-        const readingListAndFavoritesQuery = `
-        SELECT reading_list, favorites
-        FROM users
-        WHERE id = $1
-        `;
-
-        const readingListAndFavoritesResult = await db.query(readingListAndFavoritesQuery, [creator_id]);
-        res.status(200).json(readingListAndFavoritesResult.rows);
-    } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-}
-
 async function getReviewsInFeed(req, res) {
     try {
         const reviewsForFeed = await db.query(
@@ -249,9 +233,50 @@ async function getStateOfReadingAndFavorites(req,res) {
     }
 }
 
+async function getReadingList(req, res) {
+    const creator_id = req.user.id;
+    try {
+        const user = await db.query(
+            'SELECT * FROM users WHERE id = $1',
+            [creator_id]
+        );
+
+        if (user.rows.length === 0) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const readingList = user.rows[0].reading_list;
+        const readingListArray = readingList ? readingList.split(",") : [];
+
+        res.status(200).json(readingListArray);
+    } catch (err) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+async function getFavoritesShelf(req, res) {
+    const creator_id = req.user.id;
+    try {
+        const user = await db.query(
+            'SELECT * FROM users WHERE id = $1',
+            [creator_id]
+        );
+
+        if (user.rows.length === 0) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const favoritesShelf = user.rows[0].favorites_shelf;
+        const favoritesShelfArray = favoritesShelf ? favoritesShelf.split(",") : [];
+
+        res.status(200).json(favoritesShelfArray);
+    } catch (err) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
     createReview,
-    getReadingListAndFavorites,
     getReviewsInFeed,
     getReviewsOfUser,
     getReviewById,
@@ -259,5 +284,7 @@ module.exports = {
     deleteReview,
     addOrRemoveToReadingList,
     addOrRemoveToFavoritesShelf,
-    getStateOfReadingAndFavorites
+    getStateOfReadingAndFavorites,
+    getReadingList,
+    getFavoritesShelf
 }
