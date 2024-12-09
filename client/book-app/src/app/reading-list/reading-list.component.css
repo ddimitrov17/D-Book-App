@@ -1,0 +1,42 @@
+.reading-list-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 50px;
+}
+
+.book-card {
+    padding: 15px;
+    width: 100%;
+    display: flex;
+    gap: 50px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    background-color: #9F825B;
+    padding: 30px;
+}
+
+.book-thumbnail {
+    width: 75px;
+    height: 100px;
+    border-radius: 5px;
+}
+
+.book-details h3 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #E7DED0;
+}
+
+.book-details p {
+    margin: 5px 0;
+    color: #82614A;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.book-card:hover {
+    scale: 1.01;
+    cursor: pointer;
+}
