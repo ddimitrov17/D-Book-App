@@ -217,6 +217,38 @@ async function addOrRemoveToFavoritesShelf(req,res) {
     }
 }
 
+async function getStateOfReadingAndFavorites(req,res) {
+    try {
+        const book_id = req.params.id;
+        const creator_id = req.user.id;
+        const user = await db.query(
+            'SELECT * FROM users WHERE id = $1',
+            [creator_id]
+        );
+
+        if (user.rows.length === 0) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const readingList = user.rows[0].reading_list;
+        const readingListArray = readingList ? readingList.split(",") : [];
+
+        const favoritesList = user.rows[0].favorites_shelf;
+        const favoritesListArray = favoritesList ? favoritesList.split(",") : [];
+
+        const readingListState = readingListArray.includes(book_id);
+        const favoritesListState = favoritesListArray.includes(book_id);
+
+        res.status(200).json({
+            readingListState,
+            favoritesListState,
+        });
+    } catch (err) {
+        console.error("Error getting state of reading and favorites:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
     createReview,
     getReadingListAndFavorites,
@@ -226,5 +258,6 @@ module.exports = {
     updateReview,
     deleteReview,
     addOrRemoveToReadingList,
-    addOrRemoveToFavoritesShelf
+    addOrRemoveToFavoritesShelf,
+    getStateOfReadingAndFavorites
 }
