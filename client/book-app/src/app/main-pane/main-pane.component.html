@@ -1,8 +1,11 @@
 <div class="top-reviews">
-    <div class="heading">
-        <h2>Top {{n}} Most Liked Reviews</h2>
-    </div>
-    <div class="reviews-container">
-        <app-review-card *ngFor="let review of topReviews" [review]="review" class="card"></app-review-card>
-    </div>
+  <div class="heading">
+    <h2>Top {{ n }} Most Liked Reviews</h2>
+  </div>
+  <div class="reviews-container">
+    <app-loading *ngIf="isLoading"></app-loading>
+    <ng-container *ngIf="!isLoading">
+      <app-review-card *ngFor="let review of topReviews" [review]="review" class="card"></app-review-card>
+    </ng-container>
+  </div>
 </div>
