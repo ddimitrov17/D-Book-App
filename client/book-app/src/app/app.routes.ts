@@ -9,6 +9,7 @@ import { FavoritesShelfComponent } from './favorites-shelf/favorites-shelf.compo
 import { FeedComponent } from './feed/feed.component';
 import { PersonalProfileComponent } from './personal-profile/personal-profile.component';
 import { ReviewDetailsComponent } from './feed/review-details/review-details.component';
+import { AuthGuardService } from './auth/auth-guard.service';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,11 +27,11 @@ export const routes: Routes = [
         loadComponent: () => import('./public-library/book-details/book-details.component')
           .then(m => m.BookDetailsComponent)
       },
-      { path: 'reading-list', component: ReadingListComponent },
-      { path: 'favorites-shelf', component: FavoritesShelfComponent },
-      { path: 'feed', component: FeedComponent },
-      { path: 'my-profile', component: PersonalProfileComponent },
-      { path: 'review-details/:id', component: ReviewDetailsComponent },
+      { path: 'reading-list', component: ReadingListComponent, canActivate: [AuthGuardService] },
+      { path: 'favorites-shelf', component: FavoritesShelfComponent, canActivate: [AuthGuardService] },
+      { path: 'feed', component: FeedComponent, canActivate: [AuthGuardService] },
+      { path: 'my-profile', component: PersonalProfileComponent, canActivate: [AuthGuardService] },
+      { path: 'review-details/:id', component: ReviewDetailsComponent, canActivate: [AuthGuardService] },
     ],
   },
 ];

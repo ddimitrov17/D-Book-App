@@ -8,7 +8,7 @@ import { Router, NavigationStart } from '@angular/router';
 })
 export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+  isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
     this.checkAuthStatus();
@@ -20,7 +20,7 @@ export class AuthService {
     });
   }
 
-  private checkAuthStatus() {
+  checkAuthStatus() {
     this.http.get('http://localhost:5000/api/auth/validate', { withCredentials: true })
       .subscribe({
         next: () => this.isAuthenticatedSubject.next(true),
