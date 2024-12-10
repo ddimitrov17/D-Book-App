@@ -2,16 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-favorites-shelf',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink,LoadingComponent],
   templateUrl: './favorites-shelf.component.html',
   styleUrl: './favorites-shelf.component.css'
 })
 export class FavoritesShelfComponent implements OnInit {
   books: any[] = []; //TODO: Add INTERFACE
   bookRows: any[][] = []; //TODO: Add INTERFACE
+  isLoading: boolean = true;
 
   constructor(private http: HttpClient) {}
 
@@ -42,6 +44,7 @@ export class FavoritesShelfComponent implements OnInit {
             };
             this.books.push(formattedBook);
             this.updateBookRows(); 
+            this.isLoading = false;
           },
           error: (err) => {
             console.error(`Error fetching book with ID ${id}:`, err);

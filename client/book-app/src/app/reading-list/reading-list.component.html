@@ -1,7 +1,11 @@
 <div class="reading-list-container">
-    <div *ngIf="books.length === 0" class="empty-list">
+  <app-loading *ngIf="isLoading"></app-loading>
+
+  <ng-container *ngIf="!isLoading">
+    <div *ngIf="books?.length === 0" class="empty-list">
       <p>Your reading list is empty.</p>
     </div>
+
     <div *ngFor="let book of books" class="book-card" [routerLink]="['/book-details', book.id]">
       <img [src]="book.thumbnail" [alt]="book.title" class="book-thumbnail" />
       <div class="book-details">
@@ -9,5 +13,5 @@
         <p>By {{ book.author }}</p>
       </div>
     </div>
-  </div>
-  
+  </ng-container>
+</div>

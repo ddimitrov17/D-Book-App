@@ -2,15 +2,17 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-reading-list',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink,LoadingComponent],
   templateUrl: './reading-list.component.html',
   styleUrl: './reading-list.component.css',
 })
 export class ReadingListComponent implements OnInit {
   books: any[] = []; 
+  isLoading: boolean = true;
 
   constructor(private http: HttpClient) {}
 
@@ -20,6 +22,8 @@ export class ReadingListComponent implements OnInit {
         next: (bookIds) => {
           if (Array.isArray(bookIds) && bookIds.length > 0) {
             this.fetchBooks(bookIds);
+          } else {
+            this.isLoading=false;
           }
         },
         error: (err) => {
@@ -40,6 +44,7 @@ export class ReadingListComponent implements OnInit {
               thumbnail: book.volumeInfo?.imageLinks?.thumbnail || '',
             };
             this.books.push(formattedBook);
+            this.isLoading=false;
           },
           error: (err) => {
             console.error(`Error fetching book with ID ${id}:`, err);
