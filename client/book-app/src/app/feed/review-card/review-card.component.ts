@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 interface Review {
   book_title: string;
@@ -19,14 +20,45 @@ interface Review {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './review-card.component.html',
-  styleUrls: ['./review-card.component.css']
+  styleUrl: './review-card.component.css'
 })
-export class ReviewCardComponent {
+export class ReviewCardComponent implements OnInit {
   @Input() review!: Review;
 
-  constructor(private router: Router) {}
+  isLiked: boolean = false;
+
+  constructor(private router: Router, private http: HttpClient) {}
 
   showDetails() {
     this.router.navigate(['/review-details', this.review.id]);
+  }
+
+  ngOnInit() {
+    this.http
+      .get<string[]>('http://localhost:5000/api/reviews/get-user-likes', { withCredentials: true })
+      .subscribe({
+        next: (response) => {
+          // console.log('Likes fetched:', response);
+          this.isLiked = response.includes(this.review.id);
+        },
+        error: (err) => {
+          console.error('Error fetching likes:', err);
+        },
+      });
+  }
+
+  toggleLikeButton() {
+    this.isLiked = !this.isLiked;
+    this.http
+      .post('http://localhost:5000/api/reviews/like-review', { review_id: this.review?.id }, { withCredentials: true })
+      .subscribe({
+        next: (response) => {
+          // console.log('Likes updated:', response);        
+        },
+        error: (err) => {
+          console.error('Error updating likes:', err);
+          this.isLiked = !this.isLiked;
+        },
+      });
   }
 }
