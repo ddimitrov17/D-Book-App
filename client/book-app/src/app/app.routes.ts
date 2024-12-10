@@ -10,10 +10,12 @@ import { FeedComponent } from './feed/feed.component';
 import { PersonalProfileComponent } from './personal-profile/personal-profile.component';
 import { ReviewDetailsComponent } from './feed/review-details/review-details.component';
 import { AuthGuardService } from './auth/auth-guard.service';
+import { GuestGuardService } from './auth/guest-guard.service';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent, canActivate: [GuestGuardService] },
+  { path: 'register', component: RegisterComponent, canActivate: [GuestGuardService] },
+
 
   {
     path: '',
