@@ -75,6 +75,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-clamp: 1;
     -webkit-line-clamp: 1; 
     line-height: 1.5; 
     /* max-height: calc(1.5em * 3);  */

@@ -31,6 +31,9 @@ export class PersonalProfileComponent implements OnInit {
   user: User | null = null;
   reviews: Review[] = [];
   isLoading:boolean =true;
+  numberOfReviews: number = 0;
+  readingListCount: number = 0;
+  favoritesCount: number = 0;
 
   constructor(private http: HttpClient,private router: Router) {}
 
@@ -51,11 +54,15 @@ export class PersonalProfileComponent implements OnInit {
   private fetchUserReviews() {
     if (this.user) {
       this.http
-        .get<Review[]>(`http://localhost:5000/api/reviews/get-reviews-of-user`, { withCredentials: true })
+        .get<any>(`http://localhost:5000/api/reviews/get-reviews-of-user`, { withCredentials: true })
         .subscribe({
-          next: (reviews) => {
-            this.reviews = reviews;
-            console.log('User reviews:', this.reviews);
+          next: (response) => {
+            // console.log(response)
+            this.reviews = response.reviews;
+            this.numberOfReviews = response.reviews.length;
+            this.readingListCount = response.numbers[0];
+            this.favoritesCount = response.numbers[1];
+            // console.log('User reviews:', this.reviews);
             this.isLoading=false;
           },
           error: (err) => {

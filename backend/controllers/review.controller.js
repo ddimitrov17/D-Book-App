@@ -49,7 +49,15 @@ async function getReviewsOfUser(req, res) {
             [req.user.id]
         );
 
-        res.status(201).json(reviewsOfUser.rows);
+        const profileNumbers = await db.query(
+            'SELECT reading_list, favorites_shelf from users WHERE id = $1',
+            [req.user.id]
+        )
+        const readingListCount = profileNumbers.rows[0].reading_list ? profileNumbers.rows[0].reading_list.split(',').length : 0;
+        const favoritesCount = profileNumbers.rows[0].favorites_shelf ? profileNumbers.rows[0].favorites_shelf.split(',').length : 0;
+        // console.log(readingListCount,favoritesCount)
+
+        res.status(201).json({reviews: reviewsOfUser.rows, numbers: [readingListCount, favoritesCount]});
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
