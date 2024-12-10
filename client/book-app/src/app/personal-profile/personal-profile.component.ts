@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { LoadingComponent } from '../loading/loading.component';
 
 interface User {
   username: string;
@@ -22,18 +23,18 @@ interface Review {
 @Component({
   selector: 'app-personal-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,LoadingComponent],
   templateUrl: './personal-profile.component.html',
   styleUrls: ['./personal-profile.component.css']
 })
 export class PersonalProfileComponent implements OnInit {
   user: User | null = null;
   reviews: Review[] = [];
+  isLoading:boolean =true;
 
   constructor(private http: HttpClient,private router: Router) {}
 
   ngOnInit() {
-    // Fetch user data
     this.http
       .get<User>('http://localhost:5000/api/auth/validate', { withCredentials: true })
       .subscribe({
@@ -55,6 +56,7 @@ export class PersonalProfileComponent implements OnInit {
           next: (reviews) => {
             this.reviews = reviews;
             console.log('User reviews:', this.reviews);
+            this.isLoading=false;
           },
           error: (err) => {
             console.error('Error fetching reviews:', err);

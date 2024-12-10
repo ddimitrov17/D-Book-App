@@ -1,3 +1,4 @@
 <div class="feed-container">
+    <app-loading *ngIf="isLoading"></app-loading>
     <app-review-card *ngFor="let review of reviews" [review]="review" class="card"></app-review-card>
 </div>

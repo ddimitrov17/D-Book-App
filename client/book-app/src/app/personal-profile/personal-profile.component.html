@@ -1,27 +1,31 @@
 <div class="profile-details">
-    <div class="profile-photo">
-        <img src="defaultprofilephoto.png" alt="Profile Photo" class="photo">
-    </div>
-    <div class="profile-info">
-        <h2 class="fullname">{{user?.full_name}}</h2>
-        <p class="username">{{ '@' + user?.username }}</p>
-    </div>
-    <div class="profile-stats">
-        <div class="stat-item">
-            <h3>Reviews</h3>
-            <p class="stat-number">0</p>
+    <app-loading *ngIf="isLoading"></app-loading>
+    <ng-container *ngIf="!isLoading">
+        <div class="profile-photo">
+            <img src="defaultprofilephoto.png" alt="Profile Photo" class="photo">
         </div>
-        <div class="stat-item">
-            <h3>Reading List</h3>
-            <p class="stat-number">0</p>
+        <div class="profile-info">
+            <h2 class="fullname">{{user?.full_name}}</h2>
+            <p class="username">{{ '@' + user?.username }}</p>
         </div>
-        <div class="stat-item">
-            <h3>Favorites</h3>
-            <p class="stat-number">0</p>
+        <div class="profile-stats">
+            <div class="stat-item">
+                <h3>Reviews</h3>
+                <p class="stat-number">0</p>
+            </div>
+            <div class="stat-item">
+                <h3>Reading List</h3>
+                <p class="stat-number">0</p>
+            </div>
+            <div class="stat-item">
+                <h3>Favorites</h3>
+                <p class="stat-number">0</p>
+            </div>
         </div>
-    </div>
+    </ng-container>
 </div>
 <div class="feed-container">
+    <app-loading *ngIf="isLoading"></app-loading>
     <div *ngFor="let review of reviews" class="review-card">
         <div class="review-author">
             <p class="author-paragraph">You wrote:</p>

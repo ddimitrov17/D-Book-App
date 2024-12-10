@@ -49,7 +49,6 @@ export class PublicLibraryComponent {
       .subscribe({
         next: (response) => {
           this.books = response.items || [];  
-          console.log(this.books) //TODO: Remove
         },
 
         error: (err) => {

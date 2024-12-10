@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReviewCardComponent } from './review-card/review-card.component';
-
+import { LoadingComponent } from '../loading/loading.component';
 
 interface Review {
   id: string;
@@ -21,12 +21,13 @@ interface Review {
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule, ReviewCardComponent],
+  imports: [CommonModule, ReviewCardComponent,LoadingComponent],
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit {
   reviews: Review[] = [];
+  isLoading: boolean = true;
 
   constructor(private http: HttpClient) { }
 
@@ -36,6 +37,7 @@ export class FeedComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.reviews = response;
+          this.isLoading = false;
         },
         error: (err) => {
           console.error('Error fetching reviews:', err);
