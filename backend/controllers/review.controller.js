@@ -348,6 +348,19 @@ async function likeUnlikeReview(req, res) {
     }
 }
 
+async function getTheNMostLikedReviews(req,res) {
+    try {
+        const { n } = req.body;
+        const reviews = await db.query(
+            'SELECT * FROM reviews ORDER BY liked_by DESC LIMIT $1',
+            [n]
+        );
+        res.status(200).json(reviews.rows);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
     createReview,
     getReviewsInFeed,
