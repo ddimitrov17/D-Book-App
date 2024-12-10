@@ -2,7 +2,9 @@ const express = require('express');
 const { authenticateToken } = require('../middlewares/auth.middleware');
 const { createReview, getReviewsInFeed, getReviewsOfUser, getReviewById, updateReview, 
     deleteReview, addOrRemoveToReadingList, addOrRemoveToFavoritesShelf, 
-    getStateOfReadingAndFavorites, getReadingList, getFavoritesShelf } = require('../controllers/review.controller');
+    getStateOfReadingAndFavorites, getReadingList, getFavoritesShelf, 
+    getUserLikes,
+    likeUnlikeReview} = require('../controllers/review.controller');
 
 const reviewRouter = express.Router();
 
@@ -19,6 +21,9 @@ reviewRouter.get('/get-state-of-reading-and-favorites/:id',authenticateToken,get
 
 reviewRouter.get('/get-reading-list',authenticateToken,getReadingList);
 reviewRouter.get('/get-favorites-shelf',authenticateToken,getFavoritesShelf);
+
+reviewRouter.get('/get-user-likes',authenticateToken,getUserLikes);
+reviewRouter.post('/like-review',authenticateToken,likeUnlikeReview);
 
 module.exports = {
     reviewRouter

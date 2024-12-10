@@ -24,7 +24,7 @@ async function getReviewsInFeed(req, res) {
             [req.user.id]
         );
 
-        for (let i=0;i<reviewsForFeed.rows.length;i++) {
+        for (let i = 0; i < reviewsForFeed.rows.length; i++) {
             const creatorId = reviewsForFeed.rows[i].creator_id;
             const creatorQuery = `
             SELECT username
@@ -42,7 +42,7 @@ async function getReviewsInFeed(req, res) {
     }
 }
 
-async function getReviewsOfUser(req,res) {
+async function getReviewsOfUser(req, res) {
     try {
         const reviewsOfUser = await db.query(
             'SELECT * FROM reviews WHERE creator_id = $1',
@@ -55,7 +55,7 @@ async function getReviewsOfUser(req,res) {
     }
 }
 
-async function getReviewById(req,res) {
+async function getReviewById(req, res) {
     try {
         const reviewId = req.params.id;
         const reviewById = await db.query(
@@ -63,16 +63,16 @@ async function getReviewById(req,res) {
             [reviewId]
         );
 
-            const creatorId = reviewById.rows[0].creator_id;
-            const creatorQuery = `
+        const creatorId = reviewById.rows[0].creator_id;
+        const creatorQuery = `
             SELECT username
             FROM users
             WHERE id = $1
             `;
-            const creatorResult = await db.query(creatorQuery, [creatorId]);
-            reviewById.rows[0].creator = {
-                username: creatorResult.rows[0].username,
-            }
+        const creatorResult = await db.query(creatorQuery, [creatorId]);
+        reviewById.rows[0].creator = {
+            username: creatorResult.rows[0].username,
+        }
 
         res.status(201).json(reviewById.rows[0]);
     } catch (error) {
@@ -82,8 +82,8 @@ async function getReviewById(req,res) {
 
 async function updateReview(req, res) {
     try {
-        const reviewId = req.params.id; 
-        const { review_content } = req.body; 
+        const reviewId = req.params.id;
+        const { review_content } = req.body;
 
         if (!review_content || review_content.trim() === "") {
             return res.status(400).json({ error: "Review content cannot be empty" });
@@ -91,7 +91,7 @@ async function updateReview(req, res) {
 
         const result = await db.query(
             'UPDATE reviews SET review_content = $1 WHERE id = $2 AND creator_id = $3 RETURNING *',
-            [review_content, reviewId, req.user.id] 
+            [review_content, reviewId, req.user.id]
         );
 
         if (result.rowCount === 0) {
@@ -102,12 +102,12 @@ async function updateReview(req, res) {
             review: result.rows[0],
         });
     } catch (error) {
-        console.error("Error updating review:", error.message); 
+        console.error("Error updating review:", error.message);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }
 
-async function deleteReview(req,res) {
+async function deleteReview(req, res) {
     try {
         const reviewId = req.params.id;
         const result = await db.query(
@@ -127,7 +127,7 @@ async function deleteReview(req,res) {
     }
 }
 
-async function addOrRemoveToReadingList(req,res) {
+async function addOrRemoveToReadingList(req, res) {
     try {
         const { book_id } = req.body;
         const creator_id = req.user.id;
@@ -164,7 +164,7 @@ async function addOrRemoveToReadingList(req,res) {
     }
 }
 
-async function addOrRemoveToFavoritesShelf(req,res) {
+async function addOrRemoveToFavoritesShelf(req, res) {
     try {
         const { book_id } = req.body;
         const creator_id = req.user.id;
@@ -201,7 +201,7 @@ async function addOrRemoveToFavoritesShelf(req,res) {
     }
 }
 
-async function getStateOfReadingAndFavorites(req,res) {
+async function getStateOfReadingAndFavorites(req, res) {
     try {
         const book_id = req.params.id;
         const creator_id = req.user.id;
@@ -275,6 +275,64 @@ async function getFavoritesShelf(req, res) {
     }
 }
 
+async function getUserLikes(req, res) {
+    const creator_id = req.user.id;
+    try {
+        const user = await db.query(
+            'SELECT * FROM users WHERE id = $1',
+            [creator_id]
+        );
+
+        if (user.rows.length === 0) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const userLikes = user.rows[0].liked_reviews;
+        const userLikesArray = userLikes ? userLikes.split(",") : [];
+
+        res.status(200).json(userLikesArray);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+async function likeUnlikeReview(req, res) {
+    try {
+        const { review_id } = req.body;
+        const creator_id = req.user.id;
+        const user = await db.query(
+            'SELECT * FROM users WHERE id = $1',
+            [creator_id]
+        );
+
+        if (user.rows.length === 0) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const userLikes = user.rows[0].liked_reviews;
+        const userLikesArray = userLikes ? userLikes.split(",") : [];
+
+        if (userLikesArray.includes(review_id)) {
+            userLikesArray.splice(userLikesArray.indexOf(review_id), 1);
+        } else {
+            userLikesArray.push(review_id);
+        }
+
+        const updatedLikesList = userLikesArray.join(",");
+        await db.query(
+            'UPDATE users SET liked_reviews = $1 WHERE id = $2',
+            [updatedLikesList, creator_id]
+        );
+
+        res.status(200).json({
+            message: "Liked reviews updated successfully",
+        });
+    } catch (err) {
+        console.error("Error updating liked reviews:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
     createReview,
     getReviewsInFeed,
@@ -286,5 +344,7 @@ module.exports = {
     addOrRemoveToFavoritesShelf,
     getStateOfReadingAndFavorites,
     getReadingList,
-    getFavoritesShelf
+    getFavoritesShelf,
+    getUserLikes,
+    likeUnlikeReview
 }
