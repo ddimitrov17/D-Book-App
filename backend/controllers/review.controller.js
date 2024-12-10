@@ -304,6 +304,10 @@ async function likeUnlikeReview(req, res) {
             'SELECT * FROM users WHERE id = $1',
             [creator_id]
         );
+        const review = await db.query(
+            'SELECT * FROM reviews WHERE id = $1',
+            [review_id]
+        );
 
         if (user.rows.length === 0) {
             return res.status(404).json({ error: "User not found" });
@@ -312,16 +316,27 @@ async function likeUnlikeReview(req, res) {
         const userLikes = user.rows[0].liked_reviews;
         const userLikesArray = userLikes ? userLikes.split(",") : [];
 
+        const reviewLikes = review.rows[0].liked_by;
+        const reviewLikesArray = reviewLikes ? reviewLikes.split(",") : [];
+
         if (userLikesArray.includes(review_id)) {
             userLikesArray.splice(userLikesArray.indexOf(review_id), 1);
+            reviewLikesArray.splice(reviewLikesArray.indexOf(creator_id), 1);
         } else {
             userLikesArray.push(review_id);
+            reviewLikesArray.push(creator_id);
         }
 
         const updatedLikesList = userLikesArray.join(",");
+        const updatedLikedByList = reviewLikesArray.join(",");
         await db.query(
             'UPDATE users SET liked_reviews = $1 WHERE id = $2',
             [updatedLikesList, creator_id]
+        );
+
+        await db.query(
+            'UPDATE reviews SET liked_by = $1 WHERE id = $2',
+            [updatedLikedByList, review_id]
         );
 
         res.status(200).json({
