@@ -1,0 +1,25 @@
+.top-reviews {
+    padding: 20px;
+}
+
+.heading {
+    border-bottom: 1px solid #E7DED0;
+    box-sizing: border-box;
+    text-align: center;
+    color: #E7DED0;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.reviews-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.card {
+    width: 800px;
+}

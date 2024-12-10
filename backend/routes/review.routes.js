@@ -4,7 +4,8 @@ const { createReview, getReviewsInFeed, getReviewsOfUser, getReviewById, updateR
     deleteReview, addOrRemoveToReadingList, addOrRemoveToFavoritesShelf, 
     getStateOfReadingAndFavorites, getReadingList, getFavoritesShelf, 
     getUserLikes,
-    likeUnlikeReview} = require('../controllers/review.controller');
+    likeUnlikeReview,
+    getTheNMostLikedReviews} = require('../controllers/review.controller');
 
 const reviewRouter = express.Router();
 
@@ -24,6 +25,8 @@ reviewRouter.get('/get-favorites-shelf',authenticateToken,getFavoritesShelf);
 
 reviewRouter.get('/get-user-likes',authenticateToken,getUserLikes);
 reviewRouter.post('/like-review',authenticateToken,likeUnlikeReview);
+
+reviewRouter.post('/get-most-liked',getTheNMostLikedReviews);
 
 module.exports = {
     reviewRouter

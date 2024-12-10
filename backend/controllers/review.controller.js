@@ -316,27 +316,26 @@ async function likeUnlikeReview(req, res) {
         const userLikes = user.rows[0].liked_reviews;
         const userLikesArray = userLikes ? userLikes.split(",") : [];
 
-        const reviewLikes = review.rows[0].liked_by;
-        const reviewLikesArray = reviewLikes ? reviewLikes.split(",") : [];
+        let reviewLikes = review.rows[0].likes;
 
         if (userLikesArray.includes(review_id)) {
             userLikesArray.splice(userLikesArray.indexOf(review_id), 1);
-            reviewLikesArray.splice(reviewLikesArray.indexOf(creator_id), 1);
+            reviewLikes--;
         } else {
             userLikesArray.push(review_id);
-            reviewLikesArray.push(creator_id);
+            reviewLikes++;
         }
 
         const updatedLikesList = userLikesArray.join(",");
-        const updatedLikedByList = reviewLikesArray.join(",");
+        const updatedLikes = reviewLikes;
         await db.query(
             'UPDATE users SET liked_reviews = $1 WHERE id = $2',
             [updatedLikesList, creator_id]
         );
 
         await db.query(
-            'UPDATE reviews SET liked_by = $1 WHERE id = $2',
-            [updatedLikedByList, review_id]
+            'UPDATE reviews SET likes = $1 WHERE id = $2',
+            [updatedLikes, review_id]
         );
 
         res.status(200).json({
@@ -351,10 +350,26 @@ async function likeUnlikeReview(req, res) {
 async function getTheNMostLikedReviews(req,res) {
     try {
         const { n } = req.body;
+        // console.log(n);
         const reviews = await db.query(
-            'SELECT * FROM reviews ORDER BY liked_by DESC LIMIT $1',
+            `SELECT *
+             FROM reviews
+             ORDER BY likes DESC
+             LIMIT $1`,
             [n]
         );
+        for (let i = 0; i < reviews.rows.length; i++) {
+            const creatorId = reviews.rows[i].creator_id;
+            const creatorQuery = `
+            SELECT username
+            FROM users
+            WHERE id = $1
+            `;
+            const creatorResult = await db.query(creatorQuery, [creatorId]);
+            reviews.rows[i].creator = {
+                username: creatorResult.rows[0].username,
+            }
+        }
         res.status(200).json(reviews.rows);
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
@@ -374,5 +389,6 @@ module.exports = {
     getReadingList,
     getFavoritesShelf,
     getUserLikes,
-    likeUnlikeReview
+    likeUnlikeReview,
+    getTheNMostLikedReviews
 }

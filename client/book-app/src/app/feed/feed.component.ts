@@ -3,16 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReviewCardComponent } from './review-card/review-card.component';
 
+
 interface Review {
+  id: string;
   book_title: string;
   book_author: string;
   book_photo: string;
   review_content: string;
   creator_id: string;
-  id: string;
+  book_id: string | null;
+  liked_by: string | null;
   creator: {
     username: string;
-  }
+  };
 }
 
 @Component({
