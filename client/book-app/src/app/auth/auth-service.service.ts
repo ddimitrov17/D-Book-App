@@ -23,10 +23,31 @@ export class AuthService {
   checkAuthStatus() {
     this.http.get('http://localhost:5000/api/auth/validate', { withCredentials: true })
       .subscribe({
-        next: () => this.isAuthenticatedSubject.next(true),
-        error: () => this.isAuthenticatedSubject.next(false)
+        next: () => {
+          this.isAuthenticatedSubject.next(true);
+        },
+        error: () => {
+          this.isAuthenticatedSubject.next(false);
+        }
       });
+  }  
+
+  getAuthStatus(): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.http.get('http://localhost:5000/api/auth/validate', { withCredentials: true })
+        .subscribe({
+          next: () => {
+            this.isAuthenticatedSubject.next(true);
+            resolve(true);
+          },
+          error: () => {
+            this.isAuthenticatedSubject.next(false);
+            resolve(false);
+          }
+        });
+    });
   }
+  
 
   logout() {
     return this.http.get('http://localhost:5000/api/auth/logout', { withCredentials: true })
