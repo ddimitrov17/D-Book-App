@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { switchMap, tap } from 'rxjs/operators';
 import { FormsModule, NgForm } from '@angular/forms';
+import { AuthService } from '../../auth/auth-service.service'
 
 interface Review {
   review_content: string;
@@ -54,7 +55,8 @@ export class BookDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    public authService: AuthService
   ) {}
 
   openModal() {
