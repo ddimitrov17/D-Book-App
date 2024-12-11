@@ -3,10 +3,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ErrorService } from '../../error.service';
+import { ErrorComponent } from '../../error/error.component';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,ErrorComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -14,14 +16,15 @@ export class RegisterComponent {
   @ViewChild('RegisterForm') form: NgForm | undefined;
   submitted: boolean = false;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private errorService: ErrorService) {}
 
   registerSubmitHandler() {
     this.submitted = true;
     const form = this.form!;
     
     if (form.invalid || this.isPasswordsMismatch() || this.isInvalidEmail() || this.isInvalidUsername()) {
-      return; // TODO: Handle 
+      this.errorService.setError('Form is invalid!');
+      return;
     }
 
     const formData = form.value;
@@ -31,8 +34,8 @@ export class RegisterComponent {
       next: () => {
         this.router.navigate(['/home']);
       },
-      error: (err) => {
-        console.error('Registration failed:', err);
+      error: (error) => {
+        this.errorService.setError(error.error.error);
       },
     });
   }
