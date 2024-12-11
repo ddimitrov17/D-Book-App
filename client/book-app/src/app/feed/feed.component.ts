@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReviewCardComponent } from './review-card/review-card.component';
 import { LoadingComponent } from '../loading/loading.component';
+import { ErrorService } from '../error.service';
+import { ErrorComponent } from '../error/error.component';
 
 interface Review {
   id: string;
@@ -21,7 +23,7 @@ interface Review {
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule, ReviewCardComponent,LoadingComponent],
+  imports: [CommonModule, ReviewCardComponent,LoadingComponent, ErrorComponent],
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.css']
 })
@@ -29,7 +31,7 @@ export class FeedComponent implements OnInit {
   reviews: Review[] = [];
   isLoading: boolean = true;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private errorService: ErrorService) { }
 
   ngOnInit() {
     this.http
@@ -39,8 +41,8 @@ export class FeedComponent implements OnInit {
           this.reviews = response;
           this.isLoading = false;
         },
-        error: (err) => {
-          console.error('Error fetching reviews:', err);
+        error: (error) => {
+          this.errorService.setError(error.error.error);
         },
       });
   }

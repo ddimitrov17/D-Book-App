@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
+import { ErrorService } from '../error.service';
+import { ErrorComponent } from '../error/error.component';
 
 interface BookVolume {
   id: string;
@@ -25,7 +27,7 @@ interface FormattedBook {
 
 @Component({
   selector: 'app-favorites-shelf',
-  imports: [CommonModule,RouterLink,LoadingComponent],
+  imports: [CommonModule,RouterLink,LoadingComponent, ErrorComponent],
   templateUrl: './favorites-shelf.component.html',
   styleUrl: './favorites-shelf.component.css'
 })
@@ -34,7 +36,7 @@ export class FavoritesShelfComponent implements OnInit {
   bookRows: FormattedBook[][] = [];
   isLoading: boolean = true;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private errorService: ErrorService) {}
 
   ngOnInit() {
     this.http.get<string[]>('http://localhost:5000/api/reviews/get-favorites-shelf', { withCredentials: true })
@@ -44,8 +46,8 @@ export class FavoritesShelfComponent implements OnInit {
             this.fetchBooks(bookIds);
           }
         },
-        error: (err) => {
-          console.error('Error fetching favorites shelf:', err);
+        error: (error) => {
+          this.errorService.setError(error.error.error);
         },
       });
   }
@@ -65,8 +67,8 @@ export class FavoritesShelfComponent implements OnInit {
             this.updateBookRows(); 
             this.isLoading = false;
           },
-          error: (err) => {
-            console.error(`Error fetching book with ID ${id}:`, err);
+          error: (error) => {
+            this.errorService.setError(error.error.error);
           },
         });
     });

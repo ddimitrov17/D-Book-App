@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
+import { ErrorService } from '../error.service';
+import { ErrorComponent } from '../error/error.component';
 
 interface User {
   username: string;
@@ -28,7 +30,7 @@ interface UserReviewsResponse {
 @Component({
   selector: 'app-personal-profile',
   standalone: true,
-  imports: [CommonModule,LoadingComponent],
+  imports: [CommonModule,LoadingComponent, ErrorComponent],
   templateUrl: './personal-profile.component.html',
   styleUrls: ['./personal-profile.component.css']
 })
@@ -40,7 +42,7 @@ export class PersonalProfileComponent implements OnInit {
   readingListCount: number = 0;
   favoritesCount: number = 0;
 
-  constructor(private http: HttpClient,private router: Router) {}
+  constructor(private http: HttpClient,private router: Router, private errorService: ErrorService) {}
 
   ngOnInit() {
     this.http
@@ -50,8 +52,8 @@ export class PersonalProfileComponent implements OnInit {
           this.user = response;
           this.fetchUserReviews();
         },
-        error: (err) => {
-          console.error('Error fetching user data:', err);
+        error: (error) => {
+          this.errorService.setError(error.error.error);
         },
       });
   }
@@ -70,8 +72,8 @@ export class PersonalProfileComponent implements OnInit {
             // console.log('User reviews:', this.reviews);
             this.isLoading=false;
           },
-          error: (err) => {
-            console.error('Error fetching reviews:', err);
+          error: (error) => {
+            this.errorService.setError(error.error.error);
           },
         });
     }

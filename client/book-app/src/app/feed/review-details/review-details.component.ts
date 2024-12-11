@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/auth-service.service';
+import { ErrorService } from '../../error.service';
+import { ErrorComponent } from '../../error/error.component';
 
 interface Review {
   book_title: string;
@@ -20,7 +22,7 @@ interface Review {
 
 @Component({
   selector: 'app-review-details',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ErrorComponent],
   templateUrl: './review-details.component.html',
   styleUrl: './review-details.component.css'
 })
@@ -35,7 +37,8 @@ export class ReviewDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService, 
+    private errorService: ErrorService
   ) {}
 
   openEditModal() {
@@ -78,8 +81,8 @@ export class ReviewDetailsComponent implements OnInit {
             console.error('Error fetching current user:', err);
           });
         },
-        error: (err) => {
-          console.error('Error fetching review:', err);
+        error: (error) => {
+          this.errorService.setError(error.error.error);
         }
       });
   }
@@ -93,8 +96,8 @@ export class ReviewDetailsComponent implements OnInit {
             this.review!.review_content = this.editedReviewContent; 
             this.isEditModalOpen = false;
           },
-          error: (err) => {
-            console.error('Error updating review:', err);
+          error: (error) => {
+            this.errorService.setError(error.error.error);
           }
         });
     }
@@ -108,8 +111,8 @@ export class ReviewDetailsComponent implements OnInit {
             this.isDeleteModalOpen = false;
             this.router.navigate(['/home']);
           },
-          error: (err) => {
-            console.error('Error deleting review:', err);
+          error: (error) => {
+            this.errorService.setError(error.error.error);
           }
         });
     }

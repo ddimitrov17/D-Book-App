@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
+import { ErrorService } from '../error.service';
+import { ErrorComponent } from '../error/error.component';
 
 interface BookVolume {
   id: string;
@@ -24,7 +26,7 @@ interface FormattedBook {
 
 @Component({
   selector: 'app-reading-list',
-  imports: [CommonModule,RouterLink,LoadingComponent],
+  imports: [CommonModule,RouterLink,LoadingComponent, ErrorComponent],
   templateUrl: './reading-list.component.html',
   styleUrl: './reading-list.component.css',
 })
@@ -32,7 +34,7 @@ export class ReadingListComponent implements OnInit {
   books: FormattedBook[] = []; 
   isLoading: boolean = true;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private errorService: ErrorService) {}
 
   ngOnInit() {
     this.http.get<string[]>('http://localhost:5000/api/reviews/get-reading-list', { withCredentials: true })
@@ -44,8 +46,8 @@ export class ReadingListComponent implements OnInit {
             this.isLoading=false;
           }
         },
-        error: (err) => {
-          console.error('Error fetching reading list:', err);
+        error: (error) => {
+          this.errorService.setError(error.error.error);
         },
       });
   }
@@ -64,8 +66,8 @@ export class ReadingListComponent implements OnInit {
             this.books.push(formattedBook);
             this.isLoading=false;
           },
-          error: (err) => {
-            console.error(`Error fetching book with ID ${id}:`, err);
+          error: (error) => {
+            this.errorService.setError(error.error.error);
           },
         });
     });

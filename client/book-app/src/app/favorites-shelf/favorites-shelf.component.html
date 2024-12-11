@@ -1,4 +1,5 @@
 <div class="favorites-shelf-container">
+    <app-error></app-error>
     <app-loading *ngIf="isLoading"></app-loading>
     <ng-container *ngIf="!isLoading">
         <div *ngIf="books.length === 0" class="empty-list">
