@@ -64,6 +64,10 @@
     width: calc(50% - 50px);
 }
 
+.stat-name {
+    text-align: center;
+}
+
 .review {
     border-bottom: 1px solid #E7DED0;
 }
