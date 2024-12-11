@@ -6,6 +6,7 @@
     padding: 20px;
     width: 100%;
     box-sizing: border-box;
+    justify-content: center;
 }
 .author-paragraph {
     color: #DAC09B;
