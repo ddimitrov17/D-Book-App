@@ -68,3 +68,9 @@ input:-webkit-autofill {
     -webkit-text-fill-color: white;
     transition: background-color 5000s ease-in-out 0s;
 }
+
+small {
+    color: #DAC09B;
+    font-weight: bold;
+    display: inline-block;
+}
