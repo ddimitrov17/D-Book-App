@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../auth/auth-service.service'
 
 
 interface Review {
@@ -30,7 +31,7 @@ export class ReviewCardComponent implements OnInit {
 
   isLiked: boolean = false;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient, public authService: AuthService) {}
 
   showDetails() {
     this.router.navigate(['/review-details', this.review.id]);

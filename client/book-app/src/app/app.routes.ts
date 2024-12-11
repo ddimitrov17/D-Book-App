@@ -33,7 +33,7 @@ export const routes: Routes = [
       { path: 'favorites-shelf', component: FavoritesShelfComponent, canActivate: [AuthGuardService] },
       { path: 'feed', component: FeedComponent, canActivate: [AuthGuardService] },
       { path: 'my-profile', component: PersonalProfileComponent, canActivate: [AuthGuardService] },
-      { path: 'review-details/:id', component: ReviewDetailsComponent, canActivate: [AuthGuardService] },
+      { path: 'review-details/:id', component: ReviewDetailsComponent },
     ],
   },
 ];
