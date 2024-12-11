@@ -1,0 +1,14 @@
+.error-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #9F825B;
+    color: #E7DED0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

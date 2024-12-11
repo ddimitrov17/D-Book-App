@@ -3,10 +3,12 @@ import { Component, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ErrorService } from '../../error.service';
+import { ErrorComponent } from '../../error/error.component';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule, ErrorComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -14,13 +16,13 @@ export class LoginComponent {
   @ViewChild('LoginForm') form: NgForm | undefined;
   submitted: boolean = false;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private errorService: ErrorService) { }
 
   loginSubmitHandler() {
     this.submitted = true;
     const form = this.form!;
     if (form.invalid || this.isInvalidUsername()) {
-      return; //TODO HANDLE
+      return;
     }
     const formData = form.value;
 
@@ -28,8 +30,8 @@ export class LoginComponent {
       next: (response) => {
         this.router.navigate(['/home']);
       },
-      error: (err) => {
-        console.error('Login failed:', err); //TODO: Add Error Handling
+      error: (error) => {
+        this.errorService.setError(error.error.error);
       },
     });
   }
