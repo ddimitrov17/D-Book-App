@@ -8,8 +8,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-register',
   imports: [FormsModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
-  standalone: true,
+  styleUrl: './register.component.css'
 })
 export class RegisterComponent {
   @ViewChild('RegisterForm') form: NgForm | undefined;

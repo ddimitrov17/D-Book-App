@@ -2,13 +2,25 @@
     <div class="container">
         <form #LoginForm="ngForm" (ngSubmit)="loginSubmitHandler()" class="form">
             <div class="input-group">
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" name="username" required ngModel/>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required minlength="3" maxlength="18"
+                    #usernameInput="ngModel" ngModel />
+                <div *ngIf="(usernameInput.invalid && usernameInput.touched) || submitted">
+                    <small *ngIf="usernameInput.errors?.['required']">Username is required.</small>
+                    <small *ngIf="usernameInput.errors?.['minlength']">Username must be at least 3 characters.</small>
+                    <small *ngIf="isInvalidUsername()">Username can only contain letters, numbers, and
+                        underscores.</small>
+                </div>
             </div>
 
             <div class="input-group">
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" name="password" required ngModel/>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required minlength="6" maxlength="24"
+                    #passwordInput="ngModel" ngModel />
+                <div *ngIf="(passwordInput.invalid && passwordInput.touched) || submitted">
+                    <small *ngIf="passwordInput.errors?.['required']">Password is required.</small>
+                    <small *ngIf="passwordInput.errors?.['minlength']">Password must be at least 6 characters.</small>
+                </div>
             </div>
 
             <button type="submit" class="submit-button">Login</button>
