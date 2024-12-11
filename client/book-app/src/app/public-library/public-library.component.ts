@@ -38,7 +38,6 @@ export class PublicLibraryComponent {
   searchSubmitHandler() {
     const form = this.form!;
     if (form.invalid) {
-      console.log('This form is invalid!'); //TODO: Add Error Handling
       return;
     }
 

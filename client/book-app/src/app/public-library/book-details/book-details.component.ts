@@ -50,7 +50,7 @@ export class BookDetailsComponent implements OnInit {
   isModalOpen: boolean = false;
   isInTheReadingList: boolean = false;
   isInTheFavorites: boolean = false;
-  placeholderImage: string = ''; // TODO: Add placeholder image
+  placeholderImage: string = '';
 
   constructor(
     private route: ActivatedRoute,
