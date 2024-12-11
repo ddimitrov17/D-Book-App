@@ -4,6 +4,24 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
 
+interface BookVolume {
+  id: string;
+  volumeInfo: {
+    title: string;
+    authors?: string[];
+    imageLinks?: {
+      thumbnail?: string;
+    };
+  };
+}
+
+interface FormattedBook {
+  id: string;
+  title: string;
+  author: string;
+  thumbnail: string;
+}
+
 @Component({
   selector: 'app-reading-list',
   imports: [CommonModule,RouterLink,LoadingComponent],
@@ -11,7 +29,7 @@ import { LoadingComponent } from '../loading/loading.component';
   styleUrl: './reading-list.component.css',
 })
 export class ReadingListComponent implements OnInit {
-  books: any[] = []; 
+  books: FormattedBook[] = []; 
   isLoading: boolean = true;
 
   constructor(private http: HttpClient) {}
@@ -34,7 +52,7 @@ export class ReadingListComponent implements OnInit {
 
   fetchBooks(bookIds: string[]) {
     bookIds.forEach((id) => {
-      this.http.get<any>(`https://www.googleapis.com/books/v1/volumes/${id}`)
+      this.http.get<BookVolume>(`https://www.googleapis.com/books/v1/volumes/${id}`)
         .subscribe({
           next: (book) => {
             const formattedBook = {

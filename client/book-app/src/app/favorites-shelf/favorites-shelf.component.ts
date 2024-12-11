@@ -4,6 +4,25 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
 
+interface BookVolume {
+  id: string;
+  volumeInfo: {
+    title: string;
+    authors?: string[];
+    imageLinks?: {
+      thumbnail?: string;
+    };
+  };
+}
+
+interface FormattedBook {
+  id: string;
+  title: string;
+  author: string;
+  thumbnail: string;
+}
+
+
 @Component({
   selector: 'app-favorites-shelf',
   imports: [CommonModule,RouterLink,LoadingComponent],
@@ -11,8 +30,8 @@ import { LoadingComponent } from '../loading/loading.component';
   styleUrl: './favorites-shelf.component.css'
 })
 export class FavoritesShelfComponent implements OnInit {
-  books: any[] = []; //TODO: Add INTERFACE
-  bookRows: any[][] = []; //TODO: Add INTERFACE
+  books: FormattedBook[] = [];
+  bookRows: FormattedBook[][] = [];
   isLoading: boolean = true;
 
   constructor(private http: HttpClient) {}
@@ -33,10 +52,10 @@ export class FavoritesShelfComponent implements OnInit {
 
   fetchBooks(bookIds: string[]) {
     bookIds.forEach((id) => {
-      this.http.get<any>(`https://www.googleapis.com/books/v1/volumes/${id}`)
+      this.http.get<BookVolume>(`https://www.googleapis.com/books/v1/volumes/${id}`)
         .subscribe({
           next: (book) => {
-            const formattedBook = {
+            const formattedBook: FormattedBook = {
               id: book.id,
               title: book.volumeInfo?.title || 'Untitled',
               author: book.volumeInfo?.authors?.join(', ') || 'Unknown Author',

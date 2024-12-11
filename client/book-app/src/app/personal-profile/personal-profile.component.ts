@@ -20,6 +20,11 @@ interface Review {
   id: string;
 }
 
+interface UserReviewsResponse {
+  reviews: Review[];
+  numbers: [number, number]; // [readingListCount, favoritesCount]
+}
+
 @Component({
   selector: 'app-personal-profile',
   standalone: true,
@@ -54,7 +59,7 @@ export class PersonalProfileComponent implements OnInit {
   private fetchUserReviews() {
     if (this.user) {
       this.http
-        .get<any>(`http://localhost:5000/api/reviews/get-reviews-of-user`, { withCredentials: true })
+        .get<UserReviewsResponse>(`http://localhost:5000/api/reviews/get-reviews-of-user`, { withCredentials: true })
         .subscribe({
           next: (response) => {
             // console.log(response)

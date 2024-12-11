@@ -6,6 +6,12 @@
     padding: 50px;
 }
 
+.empty {
+    text-align: center;
+    color: #E7DED0;
+    font-weight: bold;
+}
+
 .book-card {
     padding: 15px;
     width: 100%;

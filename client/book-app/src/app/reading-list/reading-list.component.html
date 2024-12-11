@@ -3,7 +3,7 @@
 
   <ng-container *ngIf="!isLoading">
     <div *ngIf="books?.length === 0" class="empty-list">
-      <p>Your reading list is empty.</p>
+      <p class="empty">Your reading list is empty.</p>
     </div>
 
     <div *ngFor="let book of books" class="book-card" [routerLink]="['/book-details', book.id]">
