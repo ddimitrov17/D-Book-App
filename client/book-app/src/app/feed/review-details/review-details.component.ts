@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth-service.service';
 
 interface Review {
   book_title: string;
@@ -19,20 +20,22 @@ interface Review {
 
 @Component({
   selector: 'app-review-details',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './review-details.component.html',
-  styleUrls: ['./review-details.component.css']
+  styleUrl: './review-details.component.css'
 })
 export class ReviewDetailsComponent implements OnInit {
   review: Review | null = null;
   isEditModalOpen = false;
   isDeleteModalOpen = false;
   editedReviewContent = '';
+  isAuthor: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   openEditModal() {
@@ -57,16 +60,28 @@ export class ReviewDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const reviewId = params['id'];
-      this.http.get<Review>(`http://localhost:5000/api/reviews/get-review/${reviewId}`, { withCredentials: true })
-        .subscribe({
-          next: (review) => {
-            this.review = review;
-          },
-          error: (err) => {
-            console.error('Error fetching review:', err);
-          }
-        });
+      this.fetchReview(reviewId);
     });
+  }
+
+  fetchReview(reviewId: string) {
+    this.http.get<Review>(`http://localhost:5000/api/reviews/get-review/${reviewId}`, { withCredentials: true })
+      .subscribe({
+        next: (review) => {
+          this.review = review;
+
+          this.authService.getCurrentUser().then((user) => {
+            if (user) {
+              this.isAuthor = user.id === this.review?.creator_id;
+            }
+          }).catch((err) => {
+            console.error('Error fetching current user:', err);
+          });
+        },
+        error: (err) => {
+          console.error('Error fetching review:', err);
+        }
+      });
   }
 
   editReview() {
@@ -100,4 +115,3 @@ export class ReviewDetailsComponent implements OnInit {
     }
   }
 }
-
