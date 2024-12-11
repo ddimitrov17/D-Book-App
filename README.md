@@ -1,8 +1,20 @@
 # D-Book App
 
-**D-Book App** is a web application,built with Angular, Node.js and PostGreSQL as database.The app allows users to browse and discover books, manage their personalized reading list, and interact with reviews. The app integrates with the Google Books API to provide a seamless book browsing experience and offers user authentication for personalized features.
+**D-Book App** is a full-stack web application built with Angular, Node.js, and PostgreSQL. The app allows users to browse and discover books, manage their personalized reading list, and interact with reviews. It integrates with the Google Books API and offers user authentication for personalized features.
 
----
+## Technologies Used
+
+### Frontend
+- **Angular** 
+
+### Backend
+- **Node.js:** 
+- **Express.js:** 
+- **PostgreSQL:** 
+- **JWT (jsonwebtoken):** 
+
+### External APIs
+- **Google Books API:** For book data and search functionality
 
 ## Features
 
@@ -12,7 +24,7 @@
 
 ### 🔍 Search Functionality  
 - **Real-Time Search:**  
-  Search for books by title, author, or keyword with live results as you type.
+  Search for books by title.
 
 ###  User Authentication  
 - **Login/Register:**  
@@ -33,3 +45,17 @@
 ### 💬 Interact with Reviews  
 - **Review Interaction:**  
   Engage with other users' reviews by liking, creating a community of readers.
+
+### Installation
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/ddimitrov17/d-book-app.git
+   cd client/book-app
+   npm install
+   ng serve
+   cd ..
+   cd backend
+   npm install
+   npm run start
+   
