@@ -6,8 +6,8 @@
     background-color: #9F825B;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    width: 100%;
     box-sizing: border-box;
+    height: auto;
 }
 
 .review {
@@ -94,4 +94,32 @@
 .like-button:hover,
 .details-button:hover {
     background-color: #D0BCA0;
+}
+
+@media (max-width: 1000px) {
+    .review-actions {
+        flex-direction: column;
+    }
+    .review-actions > * {
+        width:180px;
+    }
+}
+
+@media (max-width:700px) {
+    .book-info {
+        flex-direction: column;
+    }
+    .review-actions {
+        flex-direction: row;
+    }
+}
+
+@media (max-width:500px) {
+    .book-photo {
+        width: 100%;
+    }
+    .review-actions {
+        flex-direction: column;
+        align-items: center;
+    }
 }

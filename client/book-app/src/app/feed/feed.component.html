@@ -1,5 +1,5 @@
 <div class="feed-container">
-    <app-error></app-error>
+    <app-error *ngIf="errorService.error | async"></app-error>
     <app-loading *ngIf="isLoading"></app-loading>
     <app-review-card *ngFor="let review of reviews" [review]="review" class="card"></app-review-card>
 </div>

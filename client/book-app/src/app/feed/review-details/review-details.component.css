@@ -7,8 +7,8 @@
     padding: 30px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    width: 50%;
-    margin: 0 auto;
+    width: 80%;
+    /* margin: 0 auto; */
     position: relative;
 }
 
@@ -200,4 +200,29 @@
 
 .cancel-button:hover, .confirm-button:hover {
     background-color: #D0BCA0;
+}
+
+@media (max-width:900px) {
+    .book-info {
+        flex-direction: column;
+    }
+}
+
+@media (max-width:600px) {
+    .reviewby-heading {
+        margin-top: 20px;
+    }
+    .book-cover {
+        width: 100%;
+        height: auto;
+    }
+    .review-heading {
+        overflow-wrap: break-word;
+    }
+    .review-details-container {
+        padding: 20px;
+    }
+    .modal {
+        width:90%;
+    }
 }

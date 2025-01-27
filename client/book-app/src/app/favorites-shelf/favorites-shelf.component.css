@@ -60,3 +60,9 @@
     font-size: 1.2rem;
     color: #E7DED0;
 }
+
+@media (max-width:700px) {
+    .book-card {
+        width: 30px;
+    }
+}

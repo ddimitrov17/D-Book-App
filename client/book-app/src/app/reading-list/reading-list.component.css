@@ -46,3 +46,13 @@
     scale: 1.01;
     cursor: pointer;
 }
+
+@media (max-width:700px) {
+    .book-card {
+        flex-direction: column;
+        overflow-wrap: break-word;
+    }
+    .reading-list-container {
+        padding:20px;
+    }
+}

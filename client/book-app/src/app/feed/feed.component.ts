@@ -31,7 +31,7 @@ export class FeedComponent implements OnInit {
   reviews: Review[] = [];
   isLoading: boolean = true;
 
-  constructor(private http: HttpClient, private errorService: ErrorService) { }
+  constructor(private http: HttpClient, public errorService: ErrorService) { }
 
   ngOnInit() {
     this.http

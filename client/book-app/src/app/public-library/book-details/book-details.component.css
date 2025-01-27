@@ -235,3 +235,20 @@
     fill: #e7ded0;
 } */
 
+@media (max-width:800px) {
+    .book-header {
+        flex-direction: column;
+    }
+    .book-details-container {
+        padding: 20px;
+    }
+}
+
+@media (max-width:500px) {
+    .book-cover {
+        width: 100%;
+    }
+    .modal {
+        width: 90%;
+    }
+}

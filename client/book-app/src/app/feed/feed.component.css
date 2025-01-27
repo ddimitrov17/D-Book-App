@@ -1,12 +1,10 @@
 .feed-container {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
     width: 100%;
     box-sizing: border-box;
-    justify-content: center;
 }
 .author-paragraph {
     color: #DAC09B;
@@ -16,6 +14,6 @@
 }
 
 .card {
-    width: calc(50% - 10px);
+    width: 100%;
     box-sizing: border-box;
 }

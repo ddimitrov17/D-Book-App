@@ -61,7 +61,7 @@
     background-color: #9F825B;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    width: calc(50% - 50px);
+    width: 100%;
 }
 
 .stat-name {
@@ -145,4 +145,28 @@
 .like-button:hover,
 .details-button:hover {
     background-color: #D0BCA0;
+}
+
+@media (max-width:1600px) {
+    .profile-details {
+        flex-direction: column;
+        align-items: center;
+        gap:20px;
+    }
+}
+
+@media (max-width:700px) {
+    .book-info {
+        flex-direction: column;
+    }
+}
+
+@media (max-width:500px) {
+    .profile-stats {
+        flex-direction: column;
+    }
+    .book-photo {
+        width: 100%;
+        height: auto;
+    }
 }
